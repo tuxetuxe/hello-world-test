@@ -1,4 +1,4 @@
-import sys
+import argparse
 
 
 def greeting(name=None):
@@ -6,8 +6,12 @@ def greeting(name=None):
 
 
 def main(argv=None):
-    args = sys.argv[1:] if argv is None else argv
-    print(greeting(args[0] if args else None))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("name", nargs="?")
+    parser.add_argument("--shout", action="store_true", help="print in capitals")
+    args = parser.parse_args(argv)
+    text = greeting(args.name)
+    print(text.upper() if args.shout else text)
 
 
 if __name__ == "__main__":
